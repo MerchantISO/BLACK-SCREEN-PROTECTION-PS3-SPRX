@@ -1,0 +1,20 @@
+void TN_Stub(int r3, int r4)
+{
+    __asm("li 3, 0");
+}
+
+int TN_Hook(int r3, int r4)
+{
+    if(*(int*)0x170864C > 7 && *(int*)0x170864C < 11 ) //BLES -> 0x17087CC
+    {
+        RAGE_Print("~COL_NET_1~PPRX: ~w~Someone Tried to Freeze You with Black Screen!"); //Call PRINT_STRING
+    }
+    else{
+        TN_Stub(r3,r4); //Call Original Function
+    }
+}
+
+void Hook_Protection()
+{
+    HookFunctionStart(0x8A2260,(int)TN_Stub,(int)TN_Hook,0); //BLES -> 0x8A2430
+}
